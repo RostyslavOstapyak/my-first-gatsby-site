@@ -9,11 +9,14 @@ const BlogPage = ({ data }) => {
         <Layout pageTitle="My Blog Posts">
             <ul>
                 {
-                    data.allFile.nodes.map(node => (
-                        <li key={node.name}>
-                            {node.name}
-                        </li>
-                    ))
+                    data.allFile.nodes.map(node => {
+                        if (node.sourceInstanceName === 'blog') return (
+                            <li key={node.name}>
+                                {node.name}
+                            </li>
+                        )
+                        return null
+                    })
                 }
             </ul>
         </Layout>
@@ -25,6 +28,7 @@ export const query = graphql`
     allFile {
       nodes {
         name
+        sourceInstanceName
       }
     }
   }
